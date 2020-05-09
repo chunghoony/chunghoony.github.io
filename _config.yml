@@ -8,11 +8,11 @@
 
 title: Chung Hoon's blog!
 description: This is my blog!!
-github_username: chunghoony
+github_username:
 
 # Email and twitter are optional:
-email: datahong@umich.edu
-twitter_username: hoony
+email:
+twitter_username:
 
 # Set this to true to get LaTeX math equation support
 use_math: true

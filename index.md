@@ -4,4 +4,4 @@ Hello and welcome to my blog. I'm a master student in Data Science at University
 
 ## This is Chung Hoon's blog
 
-And you can include links, like this [link to fast.ai](https://www.fast.ai). Posts will appear after this file. 
+<!-- And you can include links, like this [link to fast.ai](https://www.fast.ai). Posts will appear after this file.  -->
