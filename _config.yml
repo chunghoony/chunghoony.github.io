@@ -7,7 +7,7 @@
 # https://learnxinyminutes.com/docs/yaml/
 
 title: Chung Hoon's blog!
-description: This is my blog!!
+description:
 github_username:
 
 # Email and twitter are optional:
