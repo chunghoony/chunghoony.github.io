@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="{{ page.lang | default: site.lang | default: " en" }}" dir="auto">
+
+<head>
+    {% include head.html %}
+</head>
+
+<body class="{% if page.layout == 'home' %}list{% endif %}" id="top">
+    <script>
+        if (localStorage.getItem("pref-theme") === "dark") {
+            document.body.classList.add('dark');
+        } else if (localStorage.getItem("pref-theme") === "light") {
+            document.body.classList.remove('dark')
+        } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.body.classList.add('dark');
+        }
+
+    </script>
+
+    {% include header.html %}
+
+    <main class="main">
+        {{ content }}
+    </main>
+
+    {% include footer.html %}
+</body>
+
+</html>
