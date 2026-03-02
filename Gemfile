@@ -1,13 +1,20 @@
 source "https://rubygems.org"
-# Hello! This is where you manage which Jekyll version is used to run.
-# When you want to use a different version, change it below, save the
-# file and run `bundle install`. Run Jekyll with `bundle exec`, like so:
-#
-#     bundle exec jekyll serve
-#
-# This will help ensure the proper Jekyll version is running.
-# Happy Jekylling!
-# gem "jekyll", "~> 4.0.0"
+
+# Monkey-patch for Ruby 4.x compatibility
+[Object, String, Symbol, Array, Hash, Integer, Float].each do |klass|
+  klass.class_eval do
+    def tainted?; false; end
+    def taint; self; end
+    def untaint; self; end
+  end
+end
+
+gem "csv"
+gem "webrick"
+gem "base64"
+gem "logger"
+gem "bigdecimal"
+gem "mutex_m"
 # This is the default theme for new Jekyll sites. You may change this to anything you like.
 gem "minima", "~> 2.5"
 # To upgrade, run `bundle update github-pages`.
