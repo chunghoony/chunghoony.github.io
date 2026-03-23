@@ -40,3 +40,5 @@ gem "wdm", "~> 0.1.1", :install_if => Gem.win_platform?
 
 gem "faraday", "< 3.0"
 
+
+gem "ruby-lsp", "~> 0.26.8", group: :development
