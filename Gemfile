@@ -19,6 +19,7 @@ gem "mutex_m"
 gem "minima", "~> 2.5"
 # To upgrade, run `bundle update github-pages`.
 gem "github-pages", group: :jekyll_plugins
+gem "activesupport", ">= 6.1.7.5"
 # If you have any plugins, put them here!
 group :jekyll_plugins do
   gem "jekyll-feed", "~> 0.12"
@@ -31,7 +32,7 @@ gem "jekyll-github-metadata"
 # Windows and JRuby does not include zoneinfo files, so bundle the tzinfo-data gem
 # and associated library.
 install_if -> { RUBY_PLATFORM =~ %r!mingw|mswin|java! } do
-  gem "tzinfo", "~> 1.2"
+  gem "tzinfo", "~> 2.0"
   gem "tzinfo-data"
 end
 
