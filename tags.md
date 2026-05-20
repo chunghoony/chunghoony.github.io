@@ -8,7 +8,7 @@ permalink: /tags/
 {% for tag in site.tags %}
   <li>
     <a href="#{{ tag[0] | slugify }}">
-      {{ tag[0] }} <sup><strong><sup>{{ tag[1].size }}</sup></strong></sup>
+      {{ tag[0] }} <span class="tag-count">{{ tag[1].size }}</span>
     </a>
   </li>
 {% endfor %}

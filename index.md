@@ -3,10 +3,6 @@ layout: home
 title: Home
 ---
 
-Hello and welcome to my blog. I'm a master student in Data Science at University of Michigan.  Currently, I am the team lead for the University of Michigan - Alexa Prize Socialbot Grand Challenege 3 [link to Audrey's website](http://audrey.si.umich.edu/)
+Hello and welcome! I am a Master's student in Data Science at the University of Michigan. 
 
-<!-- ![Image of fast.ai logo](images/logo.png) -->
-
-## This is Chung Hoon's blog
-
-<!-- And you can include links, like this [link to fast.ai](https://www.fast.ai). Posts will appear after this file.  -->
+Currently, I serve as the Team Lead for the **University of Michigan Alexa Prize Socialbot Grand Challenge 3** (check out [Audrey's website](http://audrey.si.umich.edu/)). Feel free to explore my learning notes and posts below!

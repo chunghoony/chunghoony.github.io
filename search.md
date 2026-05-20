@@ -13,10 +13,10 @@ permalink: /search/
 
 <style>
     #searchbox {
-        margin-top: 20px;
+        margin-top: 30px;
         display: flex;
         flex-direction: column;
-        gap: 30px;
+        gap: 24px;
         position: relative;
     }
     .search-input-wrapper {
@@ -25,45 +25,63 @@ permalink: /search/
     }
     #searchInput {
         width: 100%;
-        padding: 10px;
-        font-size: 16px;
-        border: 1px solid var(--border, #ccc);
-        border-radius: 4px;
-        background: var(--entry, #fff);
-        color: var(--primary, #000);
+        padding: 16px 20px;
+        font-size: 17px;
+        font-family: inherit;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        background: var(--entry);
+        color: var(--primary);
         display: block;
         box-sizing: border-box;
-        height: 50px;
+        height: 56px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.01);
+        transition: all 0.2s ease;
+    }
+    #searchInput:focus {
+        border-color: var(--accent);
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(100, 100, 255, 0.15);
     }
     .local-search-entry {
-        padding-bottom: 20px;
-        border-bottom: 1px solid var(--border, #eee);
+        padding: 20px;
+        background: var(--entry);
+        border: 1px solid var(--border);
+        border-radius: 12px;
         display: flex;
         flex-direction: column;
-        gap: 5px;
-        position: relative; /* Ensure local context if needed */
+        gap: 6px;
+        position: relative;
+        margin-bottom: 16px;
+        transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
     }
-    .local-search-entry:last-child {
-        border-bottom: none;
+    .local-search-entry:hover {
+        transform: translateY(-2px);
+        border-color: var(--accent);
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.03);
     }
     .local-search-entry-header {
         display: block;
-        margin-bottom: 5px;
     }
     .local-search-title {
-        font-size: 1.5rem;
-        font-weight: bold;
+        font-size: 1.3rem;
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        font-weight: 700;
         line-height: 1.3;
-        color: var(--primary, #000);
+        color: var(--primary);
         text-decoration: none;
         display: block;
-        position: static !important; /* Force static positioning */
+        transition: color 0.2s;
+    }
+    .local-search-entry:hover .local-search-title {
+        color: var(--accent);
     }
     .local-search-meta {
-        font-size: 0.9rem;
-        color: var(--secondary, #666);
-        display: block;
-        line-height: 1.2;
+        font-size: 0.85rem;
+        color: var(--secondary);
+        display: flex;
+        align-items: center;
+        gap: 8px;
     }
 </style>
 
