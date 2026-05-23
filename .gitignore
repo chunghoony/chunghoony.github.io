@@ -1,9 +1,18 @@
+node_modules/
+build/
+dist/
+coverage/
+.DS_Store
+*.log
+.env*
+!.env.example
+
+# Backup Jekyll/Ruby ignores
 *.swp
 ~*
 *~
-_site
-.sass-cache
-.jekyll-cache
+_site/
+.sass-cache/
+.jekyll-cache/
 .jekyll-metadata
-vendor
-_notebooks/.ipynb_checkpoints
+vendor/
