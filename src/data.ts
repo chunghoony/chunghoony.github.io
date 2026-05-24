@@ -21,7 +21,7 @@ export const INITIAL_PROFILE: Profile = {
   socials: {
     github: "https://github.com/chunghoony",
     linkedin: "https://www.linkedin.com/in/chunghoon-hong",
-    twitter: "",
+    twitter: "https://x.com/hoony",
     email: ""
   }
 };

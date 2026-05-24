@@ -1,6 +1,6 @@
-import { useState, useMemo, useEffect, useRef } from "react";
-import { motion, AnimatePresence } from "motion/react";
-import { Search, BookOpen, Clock, Calendar, ArrowRight, X, ChevronRight } from "lucide-react";
+import { useState, useMemo } from "react";
+import { motion } from "motion/react";
+import { BookOpen, Clock, Calendar, ArrowRight } from "lucide-react";
 import { BlogPost } from "../types";
 
 interface BlogProps {
@@ -8,60 +8,13 @@ interface BlogProps {
 }
 
 export default function Blog({ posts }: BlogProps) {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [activeTag, setActiveTag] = useState("All");
   const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
-  const [scrollProgress, setScrollProgress] = useState(0);
-  const readerContentRef = useRef<HTMLDivElement>(null);
 
-  // Filter posts
-  const uniqueTags = useMemo(() => {
-    const tags = new Set<string>();
-    posts.forEach((p) => {
-      if (p.published) {
-        p.tags.forEach((t) => tags.add(t));
-      }
-    });
-    return ["All", ...Array.from(tags)];
+  const publishedPosts = useMemo(() => {
+    return posts
+      .filter((post) => post.published)
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
   }, [posts]);
-
-  const filteredPosts = useMemo(() => {
-    return posts.filter((post) => {
-      if (!post.published) return false;
-      const matchesSearch =
-        post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        post.excerpt.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        post.content.toLowerCase().includes(searchTerm.toLowerCase());
-      
-      const matchesTag = activeTag === "All" || post.tags.includes(activeTag);
-      return matchesSearch && matchesTag;
-    });
-  }, [posts, searchTerm, activeTag]);
-
-  // Handle scroll tracking inside the reader view
-  useEffect(() => {
-    const handleScroll = () => {
-      if (!readerContentRef.current) return;
-      const element = readerContentRef.current;
-      const totalHeight = element.scrollHeight - element.clientHeight;
-      if (totalHeight === 0) {
-        setScrollProgress(100);
-      } else {
-        const progress = (element.scrollTop / totalHeight) * 100;
-        setScrollProgress(progress);
-      }
-    };
-
-    const element = readerContentRef.current;
-    if (element) {
-      element.addEventListener("scroll", handleScroll);
-    }
-    return () => {
-      if (element) {
-        element.removeEventListener("scroll", handleScroll);
-      }
-    };
-  }, [selectedPost]);
 
   // Rich markdown display parser helper
   const renderMarkdownContent = (content: string) => {
@@ -147,8 +100,8 @@ export default function Blog({ posts }: BlogProps) {
   };
 
   return (
-    <section id="blog" className="py-20 bg-gradient-to-b from-stone-50 via-primary-light/10 to-stone-50 border-y border-stone-150">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="blog" className="py-10 bg-transparent">
+      <div className="w-full">
         
         {selectedPost ? (
           /* Inline readable article view */
@@ -216,49 +169,11 @@ export default function Blog({ posts }: BlogProps) {
             </div>
           </motion.div>
         ) : (
-          /* Grid post list view */
+          /* Simple single-column post list view */
           <>
-            {/* Header Block with Search */}
-            <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
-              <div>
-                <h2 className="font-serif text-3xl sm:text-4xl font-extrabold tracking-tight text-stone-900">Blogs</h2>
-              </div>
-
-              <div className="flex flex-col sm:flex-row items-center gap-3 w-full md:w-auto">
-                {/* Search Input */}
-                <div className="relative w-full sm:w-64">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-stone-400" />
-                  <input
-                    type="text"
-                    placeholder="Search blog posts..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="w-full pl-9 pr-4 py-2 bg-white border border-stone-200 rounded-xl text-xs sm:text-sm font-medium focus:outline-none focus:border-primary transition-colors focus:ring-1 focus:ring-primary/25"
-                  />
-                </div>
-
-                {/* Tag Selection Row */}
-                <div className="flex flex-wrap items-center gap-1 overflow-x-auto max-w-full scrollbar-none py-1">
-                  {uniqueTags.map((tag) => (
-                    <button
-                      key={tag}
-                      onClick={() => setActiveTag(tag)}
-                      className={`px-3 py-1.5 rounded-lg text-xs font-semibold cursor-pointer transition-colors whitespace-nowrap ${
-                        activeTag === tag
-                          ? "bg-primary text-white"
-                          : "bg-white border border-stone-200 text-stone-600 hover:text-primary hover:bg-primary-light/50"
-                      }`}
-                    >
-                      {tag}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            {/* Blog Post List */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {filteredPosts.map((post) => (
+            {/* Blog Post List (Single-column layout) */}
+            <div className="space-y-8 max-w-3xl">
+              {publishedPosts.map((post) => (
                 <motion.article
                   layout
                   key={post.id}
@@ -266,51 +181,38 @@ export default function Blog({ posts }: BlogProps) {
                   animate={{ opacity: 1, y: 0 }}
                   onClick={() => {
                     setSelectedPost(post);
-                    setScrollProgress(0);
                     document.getElementById("blog")?.scrollIntoView({ behavior: "smooth" });
                   }}
-                  className="group flex flex-col justify-between bg-white border border-stone-200 rounded-2xl p-6 md:p-8 hover:shadow-xl hover:border-primary/25 hover:shadow-primary/[0.015] transition-all cursor-pointer relative overflow-hidden"
+                  className="group flex flex-col gap-2 py-6 border-b border-stone-200 last:border-b-0 cursor-pointer"
                 >
-                  {/* Premium Hover Stripe */}
-                  <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-primary to-accent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                  
-                  <div>
-                    <div className="flex items-center gap-3 mb-4">
-                      <span className="px-2.5 py-1 bg-primary-light border border-primary/10 rounded-md text-[10px] font-mono font-bold uppercase tracking-wider text-primary">
-                        {post.category}
-                      </span>
-                      <div className="flex items-center gap-1 text-stone-400 text-xs font-mono">
-                        <Clock className="h-3.5 w-3.5 text-primary/80" />
-                        <span>{post.readTime}</span>
-                      </div>
-                    </div>
-
-                    <h3 className="font-serif font-extrabold text-xl text-stone-900 leading-snug group-hover:text-primary transition-colors mb-2.5">
+                  <header>
+                    <h3 className="font-serif font-bold text-xl sm:text-2xl text-stone-900 group-hover:text-stone-600 transition-colors leading-snug">
                       {post.title}
                     </h3>
-                    
-                    <p className="text-stone-550 text-sm leading-relaxed mb-6 font-serif">
-                      {post.excerpt}
-                    </p>
-                  </div>
+                  </header>
 
-                  <div className="flex items-center justify-between pt-4 border-t border-stone-100 select-none">
-                    <span className="text-xs font-mono text-stone-450">{post.date}</span>
-                    <span className="flex items-center gap-1.5 text-xs font-bold text-primary group-hover:translate-x-1 transition-transform">
-                      Read Article
-                      <ArrowRight className="h-3.5 w-3.5 text-accent" />
+                  <section className="text-stone-600 text-sm sm:text-base leading-relaxed font-sans mt-1">
+                    <p>{post.excerpt}</p>
+                  </section>
+
+                  <footer className="flex flex-wrap items-center gap-3 text-xs font-mono text-stone-400 mt-2 select-none">
+                    <span>{post.date}</span>
+                    <span className="text-stone-300">•</span>
+                    <span>{post.readTime}</span>
+                    <span className="text-stone-300">•</span>
+                    <span className="px-2 py-0.5 bg-stone-100 border border-stone-200 text-stone-600 rounded font-semibold uppercase tracking-wider text-[9px]">
+                      {post.category}
                     </span>
-                  </div>
+                  </footer>
                 </motion.article>
               ))}
             </div>
 
-            {/* Empty Search/Filter State */}
-            {filteredPosts.length === 0 && (
-              <div className="text-center py-16 bg-white rounded-2xl border border-stone-250">
+            {/* Empty State */}
+            {publishedPosts.length === 0 && (
+              <div className="text-center py-16 bg-white rounded-2xl border border-stone-200">
                 <BookOpen className="h-10 w-10 text-stone-300 mx-auto mb-3" />
-                <p className="text-stone-600 font-medium font-sans">No blog posts found matching your search.</p>
-                <p className="text-stone-400 text-xs mt-1">Try testing other terms, or add and publish custom drafts in the creator pane!</p>
+                <p className="text-stone-600 font-medium font-sans">No blog posts published yet.</p>
               </div>
             )}
           </>

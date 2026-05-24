@@ -1,6 +1,10 @@
 import { motion } from "motion/react";
 
-export default function Header() {
+interface HeaderProps {
+  activeView: 'blog' | 'archive' | 'faq';
+}
+
+export default function Header({ activeView }: HeaderProps) {
 
   return (
     <header className="sticky top-0 z-40 w-full bg-white/80 backdrop-blur-md border-b border-stone-150">
@@ -12,7 +16,7 @@ export default function Header() {
           animate={{ opacity: 1, x: 0 }}
           className="flex items-center gap-3"
         >
-          <a href="#" className="flex items-center gap-3 group">
+          <a href="#blog" className="flex items-center gap-3 group">
             <span className="font-serif font-bold text-lg tracking-tight text-stone-900 group-hover:text-primary transition-colors">
               CHH
             </span>
@@ -25,9 +29,25 @@ export default function Header() {
         {/* Navigation Actions */}
         <div className="flex items-center gap-2 sm:gap-4 font-sans text-sm font-medium">
           <nav className="hidden sm:flex items-center gap-6 text-stone-600">
-            <a href="#about" className="hover:text-primary transition-colors">About</a>
-            <a href="#blog" className="hover:text-primary transition-colors">Blog</a>
-            <a href="#publications" className="hover:text-primary transition-colors">Publications</a>
+            <a 
+              href="#blog" 
+              className={`hover:text-primary transition-colors ${activeView === 'blog' ? 'text-primary font-bold' : ''}`}
+            >
+              Blog
+            </a>
+            <a
+              href="#archive"
+              className={`hover:text-primary transition-colors ${activeView === 'archive' ? 'text-primary font-bold' : ''}`}
+            >
+              Archive
+            </a>
+            <a 
+              href="#faq" 
+              className={`hover:text-primary transition-colors ${activeView === 'faq' ? 'text-primary font-bold' : ''}`}
+            >
+              FAQ
+            </a>
+
           </nav>
         </div>
       </div>

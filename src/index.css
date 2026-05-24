@@ -6,13 +6,13 @@
   --font-serif: "Lora", Georgia, Cambria, "Times New Roman", Times, serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
 
-  --color-primary: #1e3a8a;
-  --color-primary-dark: #172554;
-  --color-primary-light: #f0f7ff;
-  --color-accent: #b8860b;
-  --color-accent-dark: #966b04;
-  --color-accent-light: #fdfbe8;
-  --color-academic-ring: rgba(30, 58, 138, 0.15);
+  --color-primary: #18181b;       /* Zinc 900 */
+  --color-primary-dark: #09090b;  /* Zinc 950 */
+  --color-primary-light: #f4f4f5; /* Zinc 100 */
+  --color-accent: #52525b;        /* Zinc 600 */
+  --color-accent-dark: #3f3f46;   /* Zinc 700 */
+  --color-accent-light: #fafafa;  /* Zinc 50 */
+  --color-academic-ring: rgba(24, 24, 27, 0.1);
 }
 
 /* Custom scrollbar and subtle transitions */
