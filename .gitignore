@@ -1,4 +1,5 @@
 node_modules/
+.antigravitycli/
 build/
 dist/
 coverage/
